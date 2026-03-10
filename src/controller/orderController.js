@@ -4,24 +4,24 @@ import {
   getOrders,
   updateOrder,
   deleteOrder,
-} from "../services/orderService";
-import { mapOrder } from "../utils/mapper";
+} from "../service/orderService.js";
+import { mapOrder } from "../utils/orderMapper.js";
 
 // cria pedido
-export async function createOrder(req, res) {
+export async function createOrder_(req, res) {
   try {
-    const mappedOrder = mapOrder(req.body);
+    const { order, items } = mapOrder(req.body); // Desestrutura aqui
 
-    const order = await createOrder(mappedOrder);
+    const newOrder = await createOrder(order, items); // Passa os dois argumentos
 
-    res.status(201).json(order);
+    res.status(201).json(newOrder);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 }
 
 // busca pedido
-export async function getOrder(req, res) {
+export async function getOrder_(req, res) {
   const order = await getOrder(req.params.id);
 
   if (!order) return res.status(404).json({ message: "Order not found" });
@@ -37,7 +37,7 @@ export async function listOrders(req, res) {
 }
 
 // atualiza pedido
-export async function updateOrder(req, res) {
+export async function updateOrder_(req, res) {
   const order = await updateOrder(req.params.id, req.body);
 
   if (!order) return res.status(404).json({ message: "Order not found" });
@@ -46,7 +46,7 @@ export async function updateOrder(req, res) {
 }
 
 // remove pedido
-export async function deleteOrder(req, res) {
+export async function deleteOrder_(req, res) {
   const order = await deleteOrder(req.params.id);
 
   if (!order) return res.status(404).json({ message: "Order not found" });

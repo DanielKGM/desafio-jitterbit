@@ -1,25 +1,27 @@
-const router = require("express").Router();
+import { Router } from "express";
 import {
-  createOrder,
+  createOrder_,
   listOrders,
-  getOrder,
-  updateOrder,
-  deleteOrder,
-} from "../controllers/orderController";
+  getOrder_,
+  updateOrder_,
+  deleteOrder_,
+} from "../controller/orderController.js";
+
+const router = Router();
 
 // cria pedido
-router.post("/", createOrder);
+router.post("/", createOrder_);
 
 // lista pedidos
 router.get("/list", listOrders);
 
 // busca pedido por id
-router.get("/:id", getOrder);
+router.get("/:id", getOrder_);
 
 // atualiza pedido
-router.put("/:id", updateOrder);
+router.put("/:id", updateOrder_);
 
 // remove pedido
-router.delete("/:id", deleteOrder);
+router.delete("/:id", deleteOrder_);
 
 export default router;
